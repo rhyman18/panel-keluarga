@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar | Tugas Cuy University</title>
+    <!-- CSS BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" id="modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+            <div class="toast-header">
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <strong class="me-auto ps-2">Notifikasi</strong>
+                <small id="hitung"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">Pemberitahuan.</div>
+        </div>
+    </div>
+    <!-- navbar untuk tab -->
+    <nav class="navbar navbar-expand-lg bg-dark sticky-sm-top" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-2" data-bs-toggle="offcanvas" href="#offcanvas" role="button"
+                aria-controls="offcanvas">KELUARGA ARI BUDIMAN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Halaman Depan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="navLink" class="nav-link active" aria-current="page" href="#">Daftar</a>
+                    </li>
+                </ul>
+                <!-- form login pc -->
+                <form class="d-none d-lg-flex" role="login" method="get" onsubmit="event.preventDefault();">
+                    <input class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
+                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
+                    <button class="btn btn-outline-success me-2" type="submit" onclick="login()">Masuk</button>
+                    <button class="btn btn-outline-danger me-2" type="submit" style="display: none;"
+                        onclick="logout()">Keluar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- content -->
+    <div class="container text-center pt-3 pb-3 mb-5">
+        <div class="card">
+            <div class="card-header">
+                Pendaftaran Anggota Keluarga
+            </div>
+            <form class="card-body text-start pt-3 pb-3" role="register" method="post"
+                onsubmit="event.preventDefault();">
+                <!-- bagan input username -->
+                <div class="mb-3" id="username">
+                    <label for="daftarUsername" class="form-label">Masukan Username :</label>
+                    <input type="text" class="form-control" id="daftarUsername" aria-describedby="cttUsername"
+                        placeholder="Username" name="username">
+                    <div id="cttUsername" class="form-text">Username minimal 3-10 panjangnya, tidak diperkenankan
+                        mengandung simbol atau emoji.</div>
+                </div>
+                <!-- bagan input nama -->
+                <div class="mb-3" id="name">
+                    <label class="form-label">Nama :</label>
+                    <input type="text" class="form-control" id="daftarNama" aria-describedby="cttNama"
+                        placeholder="Nama Anda" name="name">
+                    <div id="cttNama" class="form-text">Masukan nama asli anda supaya kita saling kenal.</div>
+                </div>
+                <!-- bagan input tanggal lahir -->
+                <div class="mb-3" id="ttl">
+                    <label class="form-label">Tanggal Lahir :</label>
+                    <input type="date" class="form-control" id="daftarTtl" name="ttl">
+                    <div id="cttTtl" class="form-text">Umur asli anda, min 6-70 tahun (tidak menerima bocil dan
+                        kakek/nenek).</div>
+                </div>
+                <!-- bagan input kata sandi -->
+                <div class="mb-3" id="password">
+                    <label for="daftarPassword" class="form-label">Kata Sandi :</label>
+                    <input type="password" id="daftarPassword" class="form-control" aria-describedby="cttPassword"
+                        placeholder="Password" name="password">
+                    <div id="cttPassword" class="form-text">
+                        Kata sandi mu harus 6-12 panjangnya, mengandung huruf kapital, angka, dan tidak diperkenankan
+                        mengandung simbol dan emoji.
+                    </div>
+                    <div id="lihat" class="form-text">
+                        <input type="checkbox" class="form-check-input" id="lihatPassword">
+                        <label id="lihatLabel" class="form-check-label" for="lihatPassword">Lihat Kata Sandi.</label>
+                    </div>
+                </div>
+                <!-- bagan mengulang kata sandi -->
+                <div class="mb-3" id="password2">
+                    <label for="daftarPassword2" class="form-label">Ulangi Kata Sandi :</label>
+                    <input type="password" id="daftarPassword2" class="form-control" aria-describedby="cttPassword"
+                        placeholder="Ulangi Password" name="password2">
+                    <div id="cttPassword2" class="form-text">Kata Sandi harus sama untuk mengecek apakah kata sandi
+                        sudah Benar.</div>
+                </div>
+                <!-- bagan memilih role -->
+                <div class="mb-4" id="role">
+                    <label class="form-label">Posisi Keluarga :</label>
+                    <select class="form-select" aria-label="role" id="daftarRole" name="role">
+                        <option selected>Pilih</option>
+                    </select>
+                    <div id="cttRole" class="form-text">Posisi mempunyai benefit masing-masing.</div>
+                </div>
+                <!-- bagan persetujuan -->
+                <div class="mb-4 form-check" id="setuju">
+                    <input type="checkbox" class="form-check-input" id="daftarSetuju" name="setuju">
+                    <label id="cttSetuju" class="form-check-label" for="daftarSetuju">Saya Setuju dengan Ketentuan dan
+                        Syarat yang Berlaku (Beserta Peraturannya).</label>
+                </div>
+                <!-- bagan tombol daftar -->
+                <div class="text-center">
+                    <button id="daftar" type="submit" class="btn btn-primary" disabled>Daftar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- content tampil hanya untuk user -->
+    <div class="container text-center pt-3 pb-3 mb-5" style="display: none;">
+        <div class="card mb-3">
+            <div class="card-header">
+                Mohon Maaf, Anda Sudah Mendaftar.
+            </div>
+            <div class="card-body text-center pt-3 pb-3">
+                <div class="card-text mb-2" id="pesan"></div>
+                <a href="panel.html" class="btn btn-primary m-2">Menu Panel</a>
+            </div>
+        </div>
+        <div class="card d-lg-none">
+            <div class="card-body">
+                <button class="btn btn-outline-danger me-2" type="submit" onclick="logout()">Keluar</button>
+            </div>
+        </div>
+    </div>
+    <!-- footer  -->
+    <div class="container-fluid fixed-bottom text-bg-dark p-3 text-center">Dibuat Oleh Ari Budiman | 2023</div>
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">KELUARGA ARI BUDIMAN</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="offcanvasJam" class="mb-3"></div>
+            <div id="offcanvasPesan"></div>
+        </div>
+    </div>
+    <!-- JS BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <!-- javascript user local storage -->
+    <script>let lokasi = 'daftar';</script>
+    <script src="update.js" type="text/javascript"></script>
+</body>
+
+</html>

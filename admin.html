@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khusus Admin</title>
+</head>
+
+<body style="text-align: center;">
+    <h1>Form Register Khusus Admin</h1>
+    <div id="notif" style="margin: 2vh;"></div>
+    <div style="margin: 1vh;">
+        <label>User</label>
+        <input type="text" placeholder="Username" id="username">
+    </div>
+    <div style="margin: 1vh;">
+        <label>Pass</label>
+        <input type="password" placeholder="Password" id="password">
+    </div>
+    <div style="margin: 1vh;">
+        <label>TTL</label>
+        <input type="date" id="ttl">
+    </div>
+    <div style="margin: 1vh;">
+        <button type="submit" onclick="daftarAdmin()">Daftar</button>
+    </div>
+    <!-- membuat id admin -->
+    <script type="text/javascript">
+        // cek user
+        if (!localStorage.getItem('status') == 'true' || localStorage.getItem('role') == 0) {
+            window.location.replace('index.html');
+        }
+        function daftarAdmin() {
+            let user = document.getElementById('username');
+            let pass = document.getElementById('password');
+            // 2022-01-31
+            let ttl = document.getElementById('ttl');
+            let notif = document.getElementById('notif');
+            let lowerCase = /[a-z]/;
+            let upperCase = /[A-Z]/;
+            let numberCase = /[0-9]/;
+            let specialCase = /[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+
+            if (ttl.value == '1996-03-18') {
+                // console.log('benar');
+                if (user.value || pass.value) {
+                    // cek input username
+                    if (!user.value.match(specialCase) && user.value.length >= 3 && user.value.length <= 10) {
+                        // console.log('username benar');
+                        // cek input password
+                        if (pass.value.match(lowerCase) && pass.value.match(upperCase) && pass.value.match(numberCase) && !pass.value.match(specialCase) &&  pass.value.length >= 6 && pass.value.length <= 12) {
+                            // console.log(user.value, pass.value, 'berhasil');
+                            // berhasil daftar admin
+                            notif.style.display = 'none';
+                            localStorage.setItem('status', true);
+                            localStorage.setItem('role', 0);
+                            localStorage.setItem('username', user.value);
+                            localStorage.setItem('password', pass.value);
+                            localStorage.setItem('nama', 'Ari Budiman');
+                            localStorage.setItem('ttl', ttl.value);
+                            window.location.replace('index.html');
+                        } else {
+                            notif.innerHTML = 'Mohon Maaf, Password tidak Sesuai Ketentuan';
+                            notif.style.color = 'red';
+                        }
+                    } else {
+                        notif.innerHTML = 'Mohon Maaf, Username tidak Sesuai Ketentuan';
+                        notif.style.color = 'red';
+                    }
+                } else {
+                    // console.log('user atau pass harus di isi');
+                    notif.innerHTML = 'Mohon Maaf, User atau Pass Harus di Isi';
+                    notif.style.color = 'red';
+                }
+            } else {
+                // console.log('salah');
+                notif.innerHTML = 'Mohon Maaf, Anda Tidak Bisa Mendaftar';
+                notif.style.color = 'red';
+                user.disabled = true;
+                pass.disabled = true;
+                ttl.disabled = true;
+            }
+        }
+    </script>
+</body>
+
+</html>
